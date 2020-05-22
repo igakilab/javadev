@@ -1,0 +1,53 @@
+#!/bin/bash
+#
+# Written by Yasuharu Mizutani.
+# Modified by Hiroshi Igaki
+
+usage(){
+    cat <<-EOF
+	
+	使い方:
+	    getlocal
+	
+	/usr/localを更新する．
+	
+	EOF
+}
+
+GB='\e[1;32m'
+GE='\e[m'
+RB='\e[1;31m'
+RE='\e[m'
+
+if [ "$#" -ge 1 ]; then
+    case "$1" in
+        -h|-help|--help)
+            usage
+            exit 0
+            ;;
+        *)
+            usage
+            exit 1
+            ;;
+    esac
+fi
+
+echo "~/kadai/${COURSEYEAR}/を更新します．"
+cd /home
+if [ -d /home/${CLASSNAME} ]; then
+  rm -rf /home/${CLASSNAME}
+fi
+git clone "https://github.com/igakilab/${CLASSNAME}.git"
+
+localdir="/home/${CLASSNAME}/local"
+
+echo "/usr/localを更新します．"
+rsync --timeout=15 -a --delete ${localdir}/ /usr/local/
+
+profiledir="/home/teachers/t2015025/public_html/prog${CLASSNAME}/etc"
+echo "etcを更新します．"
+rsync --timeout=15 -a "${id}"@${rhost}:${profiledir}/ /etc/
+
+getversion >> ~/kadai/$COURSEYEAR/.log/.version.history
+
+exit $?
