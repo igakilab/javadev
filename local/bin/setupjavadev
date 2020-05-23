@@ -38,9 +38,16 @@ fi
 
 echo "~/kadai/${COURSEYEAR}/を更新します．"
 cd /home
-if [ -d /home/${CLASSNAME} ]; then
-  rm -rf /home/${CLASSNAME}
+if [ ! -e /home/${CLASSNAME}/$COURSEYEAR ]; then
+  initgitrepo
 fi
-git clone "https://github.com/igakilab/${CLASSNAME}.git"
+cd /home/${CLASSNAME}
+git pull origin master &>/dev/null
+
+if [ $? -ne 0 ]; then
+    echo "開発環境データのダウンロードに失敗しました．"
+    echo "ネットワーク接続を確認し，コマンドを再実行して下さい．"
+    exit 1
+fi
+
 rsync --timeout=15 -a -zz /home/${CLASSNAME}/$COURSEYEAR/ ~/kadai/${COURSEYEAR}/
-rm -rf /home/${CLASSNAME}

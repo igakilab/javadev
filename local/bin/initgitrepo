@@ -45,7 +45,13 @@ echo $COURSEYEAR > .git/info/sparse-checkout
 echo local >> .git/info/sparse-checkout
 echo etc >> .git/info/sparse-checkout
 
-echo "環境更新用リポジトリを取得します"
-git pull origin master
+echo "開発環境データを取得します"
+git pull origin master &>/dev/null
 
-exit $?
+if [ $? -ne 0 ]; then
+    echo "開発環境データのダウンロードに失敗しました．"
+    echo "ネットワーク接続を確認し，コマンドを再実行して下さい．"
+    exit 1
+fi
+
+exit 0
