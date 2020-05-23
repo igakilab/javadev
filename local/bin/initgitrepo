@@ -1,7 +1,6 @@
 #!/bin/bash
 #
-# Written by Yasuharu Mizutani.
-# Modified by Hiroshi Igaki
+# Written by Hiroshi Igaki
 
 usage(){
     cat <<-EOF
@@ -46,6 +45,7 @@ echo local >> .git/info/sparse-checkout
 echo etc >> .git/info/sparse-checkout
 
 echo "開発環境データを取得します"
+echo -n "ダウンロード中........."
 git pull origin master &>/dev/null
 
 if [ $? -ne 0 ]; then
@@ -53,5 +53,8 @@ if [ $? -ne 0 ]; then
     echo "ネットワーク接続を確認し，コマンドを再実行して下さい．"
     exit 1
 fi
+
+echo "完了しました"
+#find . -type d | xargs touch -d ${dirdate}
 
 exit 0

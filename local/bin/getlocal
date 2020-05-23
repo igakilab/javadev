@@ -36,24 +36,24 @@ echo "~/kadai/${COURSEYEAR}/を更新します．"
 cd /home
 if [ ! -e /home/${CLASSNAME}/$COURSEYEAR ]; then
   initgitrepo
-fi
-cd /home/${CLASSNAME}
-git pull origin master &>/dev/null
-
-if [ $? -ne 0 ]; then
+else
+  cd /home/${CLASSNAME}
+  git pull origin master &>/dev/null
+  if [ $? -ne 0 ]; then
     echo "開発環境データのダウンロードに失敗しました．"
     echo "ネットワーク接続を確認し，コマンドを再実行して下さい．"
     exit 1
+  fi
 fi
 
 localdir="/home/${CLASSNAME}/local"
 
-echo "/usr/localを更新します．"
-rsync --timeout=15 -a --delete ${localdir}/ /usr/local/
+echo "各種コマンドを更新します．"
+rsync --checksum --timeout=15 -a --delete ${localdir}/ /usr/local/
 
 profiledir="/home/${CLASSNAME}/etc"
-echo "etcを更新します．"
-rsync --timeout=15 -a ${profiledir}/ /etc/
+echo "各種設定を更新します．"
+rsync --checksum --timeout=15 -a ${profiledir}/ /etc/
 
 getversion >> ~/kadai/$COURSEYEAR/.log/.version.history
 
