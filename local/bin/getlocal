@@ -49,11 +49,11 @@ fi
 localdir="/home/${CLASSNAME}/local"
 
 echo "各種コマンドを更新します．"
-rsync --checksum --timeout=15 -a --delete ${localdir}/ /usr/local/
+rsync -av --checksum --timeout=15 --delete ${localdir}/ /usr/local/
 
 profiledir="/home/${CLASSNAME}/etc"
 echo "各種設定を更新します．"
-rsync --checksum --timeout=15 -a ${profiledir}/ /etc/
+rsync -av --checksum --timeout=15 ${profiledir}/ /etc/
 
 getversion >> ~/kadai/$COURSEYEAR/.log/.version.history
 
