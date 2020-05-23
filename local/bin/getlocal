@@ -32,14 +32,13 @@ if [ "$#" -ge 1 ]; then
     esac
 fi
 
-echo "~/kadai/${COURSEYEAR}/を更新します．"
 if [ ! -e /home/${CLASSNAME}/$COURSEYEAR ]; then
   initgitrepo
 else
   cd /home/${CLASSNAME}
   git pull origin master &>/dev/null
   if [ $? -ne 0 ]; then
-    echo "開発環境データのダウンロードに失敗しました．"
+    echo -e "${RB}更新に失敗しました．${RE}"
     echo "ネットワーク接続を確認し，コマンドを再実行して下さい．"
     exit 1
   fi
@@ -54,6 +53,14 @@ profiledir="/home/${CLASSNAME}/etc"
 echo "各種設定を更新します．"
 rsync -a --checksum --timeout=15 ${profiledir}/ /etc/
 
+if [ $? -ne 0 ]; then
+  echo -e "${RB}更新に失敗しました．${RE}"
+  echo "ネットワーク接続を確認し，コマンドを再実行して下さい．"
+  exit 1
+fi
+
 getversion >> ~/kadai/$COURSEYEAR/.log/.version.history
 
-exit $?
+echo -e "${GB}更新は完了しました．${GE}"
+
+exit 0
