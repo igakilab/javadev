@@ -49,4 +49,4 @@ else
   fi
 fi
 
-rsync --checksum --timeout=15 -a -zz /home/${CLASSNAME}/$COURSEYEAR/ ~/kadai/${COURSEYEAR}/
+rsync -a --checksum --timeout=15 /home/${CLASSNAME}/$COURSEYEAR/ ~/kadai/${COURSEYEAR}/

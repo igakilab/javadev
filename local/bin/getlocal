@@ -33,7 +33,6 @@ if [ "$#" -ge 1 ]; then
 fi
 
 echo "~/kadai/${COURSEYEAR}/を更新します．"
-cd /home
 if [ ! -e /home/${CLASSNAME}/$COURSEYEAR ]; then
   initgitrepo
 else
@@ -49,11 +48,11 @@ fi
 localdir="/home/${CLASSNAME}/local"
 
 echo "各種コマンドを更新します．"
-rsync -av --checksum --timeout=15 --delete ${localdir}/ /usr/local/
+rsync -a --checksum --timeout=15 --delete ${localdir}/ /usr/local/
 
 profiledir="/home/${CLASSNAME}/etc"
 echo "各種設定を更新します．"
-rsync -av --checksum --timeout=15 ${profiledir}/ /etc/
+rsync -a --checksum --timeout=15 ${profiledir}/ /etc/
 
 getversion >> ~/kadai/$COURSEYEAR/.log/.version.history
 
