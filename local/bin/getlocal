@@ -44,9 +44,9 @@ localdir="/home/${CLASSNAME}/local"
 echo "/usr/localを更新します．"
 rsync --timeout=15 -a --delete ${localdir}/ /usr/local/
 
-profiledir="/home/teachers/t2015025/public_html/prog${CLASSNAME}/etc"
+profiledir="/home/${CLASSNAME}/etc"
 echo "etcを更新します．"
-rsync --timeout=15 -a "${id}"@${rhost}:${profiledir}/ /etc/
+rsync --timeout=15 -a ${profiledir}/ /etc/
 
 getversion >> ~/kadai/$COURSEYEAR/.log/.version.history
 
