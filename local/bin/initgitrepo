@@ -37,7 +37,7 @@ fi
 
 mkdir -p /home/${CLASSNAME}
 cd /home/${CLASSNAME}
-git init
+git init &>/dev/null
 git config core.sparsecheckout true
 git remote add origin https://github.com/igakilab/${CLASSNAME}.git
 echo $COURSEYEAR > .git/info/sparse-checkout
