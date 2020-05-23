@@ -19,6 +19,6 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-  echo "$HOME/kadai/$COURSEYEAR/" に "$VS7Z" が作成されました．
+  echo `pwd` に "$VS7Z" が作成されました．
   echo -e "$GB ${VS7Z} ファイルを提出して下さい．$GE"
   echo -e "提出後は ${VS7Z}を削除しても構いません．"
